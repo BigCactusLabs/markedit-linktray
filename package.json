@@ -8,6 +8,10 @@
     "type": "git",
     "url": "https://github.com/BigCactusLabs/markedit-linktray.git"
   },
+  "homepage": "https://github.com/BigCactusLabs/markedit-linktray#readme",
+  "bugs": {
+    "url": "https://github.com/BigCactusLabs/markedit-linktray/issues"
+  },
   "keywords": [
     "markedit",
     "markdown",
