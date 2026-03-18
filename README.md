@@ -62,7 +62,7 @@ npm run build     # -> dist/markedit-linktray.js
 
 ## Contributing
 
-LinkTray is small on purpose. If you have an idea, [open an issue](https://github.com/BigCactusLabs/markedit-linktray/issues) first — it's easier to align on direction before writing code.
+LinkTray is small on purpose. If you have an idea, [open an issue](https://github.com/BigCactusLabs/markedit-linktray/issues) first. It's easier to align on direction before writing code.
 
 Bug reports and PRs are welcome.
 
