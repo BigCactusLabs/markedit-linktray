@@ -255,6 +255,7 @@ export type QuickSwitcher = {
   render(): string;
   handleKey(key: string): void;
   click(index: number): void;
+  hover(index: number): void;
   setQuery(query: string): void;
 };
 
@@ -350,6 +351,9 @@ export function createQuickSwitcher(
       }
 
       void maybeOpen(entry?.item, callbacks);
+    },
+    hover(index) {
+      selectedIndex = index;
     },
     setQuery(nextQuery) {
       query = nextQuery;
@@ -608,6 +612,15 @@ function bindOverlayEvents(
 
       if (!Number.isNaN(index)) {
         controller.click(index);
+        rerender();
+      }
+    });
+
+    item.addEventListener("mouseenter", () => {
+      const index = Number(item.dataset.index);
+
+      if (!Number.isNaN(index)) {
+        controller.hover(index);
         rerender();
       }
     });

@@ -95,6 +95,19 @@ describe("createQuickSwitcher", () => {
     expect(switcher.render()).toContain('aria-disabled="true"');
   });
 
+  it("moves selection on hover without triggering open", () => {
+    const onOpen = vi.fn();
+    const switcher = createQuickSwitcher(pickerItems, {
+      onOpen,
+      onClose: vi.fn()
+    });
+
+    expect(switcher.selectedIndex).toBe(0);
+    switcher.hover(1);
+    expect(switcher.selectedIndex).toBe(1);
+    expect(onOpen).not.toHaveBeenCalled();
+  });
+
   it("closes the picker on escape", () => {
     const onClose = vi.fn();
     const switcher = createQuickSwitcher(pickerItems, {

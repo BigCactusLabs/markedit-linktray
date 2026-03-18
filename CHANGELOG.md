@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 — 2026-03-18
+
+- Hovering a row in the quick switcher now moves the selection highlight
+
 ## 0.1.0 — 2026-03-09
 
 First release. LinkTray reads Markdown links and wiki links from the active document, resolves them relative to the current file, and presents the results in a keyboard-first quick switcher.
