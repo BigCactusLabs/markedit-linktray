@@ -1,0 +1,5 @@
+node_modules/
+dist/*
+!dist/markedit-repotray.js
+.DS_Store
+docs/plans/

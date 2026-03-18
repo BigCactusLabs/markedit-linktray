@@ -1,0 +1,240 @@
+.repotray-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: grid;
+  place-items: start center;
+  padding: clamp(3rem, 10vh, 7rem) 1rem 1.5rem;
+  background:
+    linear-gradient(to bottom, rgba(237, 241, 247, 0.78), rgba(237, 241, 247, 0.88));
+  backdrop-filter: blur(6px);
+}
+
+.repotray-panel {
+  width: min(43rem, 100%);
+  max-height: min(78vh, 42rem);
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  border: 1px solid rgba(63, 77, 93, 0.14);
+  border-radius: 18px;
+  background: rgb(246, 249, 252);
+  font-family:
+    "SF Pro Text",
+    "SF Pro Display",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  box-shadow:
+    0 22px 52px rgba(26, 38, 52, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset;
+  overflow: hidden;
+}
+
+.repotray-toolbar {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.82rem 0.98rem 0.72rem;
+  border-bottom: 1px solid rgba(63, 77, 93, 0.1);
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(243, 246, 250, 0.92));
+}
+
+.repotray-toolbar__eyebrow {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(78, 95, 114, 0.82);
+}
+
+.repotray-toolbar__headline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.repotray-toolbar__title {
+  margin: 0;
+  font-size: clamp(0.98rem, 0.92rem + 0.36vw, 1.12rem);
+  font-weight: 640;
+  letter-spacing: -0.015em;
+  color: rgb(19, 31, 44);
+}
+
+.repotray-toolbar__count {
+  font-size: 0.75rem;
+  color: rgba(72, 88, 106, 0.86);
+  font-variant-numeric: tabular-nums;
+}
+
+.repotray-searchRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.62rem;
+  padding: 0.72rem 0.98rem 0.8rem;
+  border-bottom: 1px solid rgba(63, 77, 93, 0.1);
+}
+
+.repotray-searchRow__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(78, 95, 114, 0.78);
+}
+
+.repotray-search {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+  color: rgb(28, 40, 54);
+  font: inherit;
+  font-size: 0.92rem;
+}
+
+.repotray-search::placeholder {
+  color: rgba(103, 118, 136, 0.78);
+}
+
+.repotray-body {
+  overflow: auto;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+
+.repotray-sectionLabel {
+  display: block;
+  padding: 0.68rem 0.98rem 0.45rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(78, 95, 114, 0.78);
+}
+
+.repotray-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.repotray-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.76rem 0.98rem;
+  border: 0;
+  border-top: 1px solid rgba(63, 77, 93, 0.08);
+  background: transparent;
+  color: rgb(35, 49, 64);
+  font: inherit;
+  text-align: left;
+}
+
+.repotray-summary__label {
+  font-size: 0.82rem;
+  font-weight: 620;
+}
+
+.repotray-summary__meta {
+  font-size: 0.74rem;
+  color: rgba(78, 95, 114, 0.82);
+}
+
+.repotray-summary.repotray-item--selected {
+  background: rgba(68, 103, 145, 0.08);
+}
+
+.repotray-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.14rem 0.72rem;
+  align-items: start;
+  padding: 0.78rem 0.98rem;
+  border-left: 3px solid transparent;
+  transition: background-color 140ms ease, border-color 140ms ease, opacity 140ms ease;
+}
+
+.repotray-item + .repotray-item,
+.repotray-list + .repotray-sectionLabel,
+.repotray-summary + .repotray-sectionLabel,
+.repotray-summary + .repotray-list {
+  border-top: 1px solid rgba(63, 77, 93, 0.08);
+}
+
+.repotray-item__body {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.repotray-item__symbol {
+  width: 0.48rem;
+  height: 0.48rem;
+  margin-top: 0.38rem;
+  border-radius: 999px;
+}
+
+.repotray-item__symbol--existing {
+  background: rgb(88, 168, 132);
+  box-shadow: 0 0 0 3px rgba(88, 168, 132, 0.12);
+  animation: repotray-status-pulse 2.8s ease-in-out infinite;
+}
+
+.repotray-item__symbol--missing {
+  border: 1.5px solid rgba(191, 88, 88, 0.72);
+  background: rgba(191, 88, 88, 0.14);
+}
+
+.repotray-item--selected {
+  border-left-color: rgba(53, 101, 164, 0.9);
+  background: rgba(68, 103, 145, 0.08);
+}
+
+.repotray-item__filename {
+  font-size: 0.92rem;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  color: rgb(20, 31, 43);
+}
+
+.repotray-item__path {
+  color: rgba(79, 93, 110, 0.92);
+  font-size: 0.79rem;
+}
+
+.repotray-item--missing {
+  opacity: 0.62;
+}
+
+.repotray-empty {
+  margin: 0;
+  padding: 1rem 0.98rem 1.15rem;
+  color: rgba(79, 93, 110, 0.9);
+  font-size: 0.84rem;
+}
+
+@keyframes repotray-status-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(88, 168, 132, 0.1);
+    opacity: 0.9;
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px rgba(88, 168, 132, 0.16);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .repotray-item__symbol--existing {
+    animation: none;
+  }
+}

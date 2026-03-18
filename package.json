@@ -1,0 +1,20 @@
+{
+  "name": "markedit-repotray",
+  "private": true,
+  "version": "0.1.0",
+  "description": "MarkEdit extension for quick navigation across linked Markdown repo notes.",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "markedit-api": "git+https://github.com/MarkEdit-app/MarkEdit-api.git#080e8fbad8cd6de91b958c74e793c0dc34ef6fb2"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.2",
+    "vitest": "^3.0.8"
+  }
+}
