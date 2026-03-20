@@ -111,6 +111,29 @@ describe("registerLinkTrayCommand", () => {
     ]);
   });
 
+  it("deduplicates resolved paths before probing file existence", async () => {
+    const { markedit, addMainMenuItem, getFileInfo, showPicker } = createMarkEditMock({
+      documentText: "Open [[beta]], then [Beta](beta.md), then [[beta]].",
+      existingPaths: ["/workspace/docs/notes/beta.md"]
+    });
+
+    registerLinkTrayCommand(markedit, showPicker);
+    await addMainMenuItem.mock.calls[0]?.[0].action();
+
+    expect(
+      getFileInfo.mock.calls.filter(([path]) => path === "/workspace/docs/notes/beta.md")
+    ).toHaveLength(1);
+    expect(showPicker).toHaveBeenCalledWith([
+      {
+        status: "existing",
+        filename: "beta.md",
+        displayPath: "beta.md",
+        resolvedPath: "/workspace/docs/notes/beta.md",
+        openPath: "/workspace/docs/notes/beta.md"
+      }
+    ]);
+  });
+
   it("shows an empty-state alert when no markdown links are found", async () => {
     const { markedit, addMainMenuItem, showAlert, showPicker } = createMarkEditMock({
       documentText: "No repo links here."

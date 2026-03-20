@@ -60,20 +60,34 @@ export function registerLinkTrayCommand(
     }
 
     const repoRootPath = await findRepoRootPath(markedit, currentFile.filePath);
-    const pickerItems = await Promise.all(candidateLinks.map(async (link) => {
+    const seenResolvedPaths = new Set<string>();
+    const uniqueTargets = candidateLinks.flatMap((link) => {
       const resolvedPath = resolveMarkdownTarget({
         currentFilePath: currentFile.filePath,
         rawTarget: link.rawTarget,
         kind: link.kind
       });
-      const fileInfo = await markedit.getFileInfo(resolvedPath);
+
+      if (seenResolvedPaths.has(resolvedPath)) {
+        return [];
+      }
+
+      seenResolvedPaths.add(resolvedPath);
+
+      return [{
+        index: link.index,
+        resolvedPath
+      }];
+    });
+    const pickerItems = await Promise.all(uniqueTargets.map(async (target) => {
+      const fileInfo = await markedit.getFileInfo(target.resolvedPath);
 
       return {
-        index: link.index,
-        resolvedPath,
+        index: target.index,
+        resolvedPath: target.resolvedPath,
         displayPath: toDisplayPath({
           currentFilePath: currentFile.filePath,
-          resolvedTargetPath: resolvedPath,
+          resolvedTargetPath: target.resolvedPath,
           repoRootPath
         }),
         exists: fileInfo !== undefined
@@ -99,7 +113,13 @@ function createDefaultPickerAdapter(markedit: MarkEditCommandAPI): PickerAdapter
   }
 
   return createQuickSwitcherAdapter({
-    openFile: (path) => markedit.openFile?.(path) ?? Promise.resolve(false)
+    openFile: (path) => markedit.openFile?.(path) ?? Promise.resolve(false),
+    onOpenFailure: async () => {
+      await markedit.showAlert({
+        title: "Could not open linked Markdown file",
+        message: "MarkEdit could not open that file. Grant its parent folder access in MarkEdit preferences and try again."
+      });
+    }
   });
 }
 

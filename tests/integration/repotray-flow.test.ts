@@ -63,4 +63,43 @@ describe("MarkEdit-linktray integration flow", () => {
     quickSwitcher?.setQuery("beta");
     expect(quickSwitcher?.render()).toContain("beta.md");
   });
+
+  it("keeps the picker open and alerts when MarkEdit cannot open a file", async () => {
+    const openFile = vi.fn().mockResolvedValue(false);
+    const addMainMenuItem = vi.fn();
+    const showAlert = vi.fn().mockResolvedValue(0);
+
+    registerLinkTrayCommand({
+      addMainMenuItem,
+      getFileContent: vi.fn(async () => "Open [Alpha](../specs/alpha.md)."),
+      getFileInfo: vi.fn(async (path?: string) => {
+        if (path === undefined) {
+          return createFileInfo("/workspace/docs/notes/today.md");
+        }
+
+        return path === "/workspace/docs/specs/alpha.md" ? createFileInfo(path) : undefined;
+      }),
+      showAlert,
+      openFile
+    });
+
+    await addMainMenuItem.mock.calls[0]?.[0].action();
+
+    const enter = new KeyboardEvent("keydown", {
+      key: "Enter",
+      bubbles: true,
+      cancelable: true
+    });
+
+    document.dispatchEvent(enter);
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(openFile).toHaveBeenCalledWith("/workspace/docs/specs/alpha.md");
+    expect(showAlert).toHaveBeenCalledWith({
+      title: "Could not open linked Markdown file",
+      message: "MarkEdit could not open that file. Grant its parent folder access in MarkEdit preferences and try again."
+    });
+    expect(document.querySelector(".linktray-overlay")).not.toBeNull();
+  });
 });

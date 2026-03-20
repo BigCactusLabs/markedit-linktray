@@ -263,6 +263,7 @@ export type QuickSwitcher = {
 type QuickSwitcherAdapterOptions = {
   openFile: (path: string) => Promise<boolean> | boolean;
   document?: Document;
+  onOpenFailure?: (path: string) => void | Promise<void>;
   onShow?: (controller: QuickSwitcher) => void;
 };
 
@@ -396,8 +397,17 @@ export function createQuickSwitcherAdapter(options: QuickSwitcherAdapterOptions)
 
     const controller = createQuickSwitcher(items, {
       onOpen: async (path) => {
-        await options.openFile(path);
-        cleanup();
+        try {
+          if (await options.openFile(path)) {
+            cleanup();
+            return;
+          }
+        } catch {
+          // Treat rejected open attempts like an explicit false return.
+        }
+
+        await options.onOpenFailure?.(path);
+        input?.focus();
       },
       onClose: async () => {
         cleanup();

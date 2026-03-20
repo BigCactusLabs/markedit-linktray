@@ -92,6 +92,18 @@ describe("extractLinkedMarkdownTargets", () => {
     ]);
   });
 
+  it("ignores markdown image syntax", () => {
+    expect(extractLinkedMarkdownTargets("![diagram](docs/diagram.md)")).toEqual([]);
+  });
+
+  it("ignores links that only appear inside fenced code blocks", () => {
+    expect(extractLinkedMarkdownTargets("```md\n[Spec](docs/spec.md)\n[[wiki]]\n```")).toEqual([]);
+  });
+
+  it("ignores links that only appear inside inline code spans", () => {
+    expect(extractLinkedMarkdownTargets("`[Spec](docs/spec.md)` and `[[wiki]]`")).toEqual([]);
+  });
+
   it("ignores malformed input safely", () => {
     expect(extractLinkedMarkdownTargets("Broken [link]( and stray [[wiki]")).toEqual([]);
   });

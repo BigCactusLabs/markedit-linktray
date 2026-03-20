@@ -38,7 +38,7 @@ npm install && npm run build
 | `Enter` on **Missing (N)** | Expand or collapse missing links |
 | `Escape` | Close |
 
-MarkEdit-linktray parses both `[label](path.md)` and `[[wiki]]` links, including targets with anchor fragments (`file.md#heading`) and parentheses in filenames. Paths are repo-relative when a `.git` root is discoverable, document-relative otherwise. Green dot means the file exists. Red dot means it doesn't — yet.
+MarkEdit-linktray parses both `[label](path.md)` and `[[wiki]]` links, including targets with anchor fragments (`file.md#heading`) and parentheses in filenames. Links resolve relative to the current document, while displayed paths become repo-relative when a `.git` root is discoverable. Green dot means the file exists. Red dot means it doesn't — yet.
 
 > **Note:** MarkEdit sandboxes file access. If a linked note won't open, grant its parent folder access in MarkEdit preferences.
 
@@ -58,7 +58,6 @@ npm run build     # -> dist/markedit-linktray.js
 
 - Live refresh while you type
 - Create missing files from the switcher
-- Better feedback when `openFile` can't reach a target
 
 ---
 
