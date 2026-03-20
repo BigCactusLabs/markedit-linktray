@@ -312,6 +312,7 @@ export function createQuickSwitcher(
       const interactiveEntries = view.interactiveEntries;
 
       if (key === "ArrowDown") {
+        if (interactiveEntries.length === 0) return;
         selectedIndex = Math.min(selectedIndex + 1, interactiveEntries.length - 1);
         return;
       }
@@ -508,7 +509,7 @@ function renderQuickSwitcherMarkup(
     '<div class="linktray-toolbar__eyebrow">Index</div>',
     '<div class="linktray-toolbar__headline">',
     '<h2 class="linktray-toolbar__title">Linked Markdown</h2>',
-    `<div class="linktray-toolbar__count">${escapeHtml(formatCountLabel(view.availableItems.length, view.missingItems.length, query))}</div>`,
+    `<div class="linktray-toolbar__count">${escapeHtml(formatCountLabel(view.availableItems.length, view.missingItems.length))}</div>`,
     "</div>",
     "</header>",
     '<div class="linktray-searchRow">',
@@ -646,10 +647,6 @@ function isSwitcherKey(key: string): boolean {
   return key === "ArrowDown" || key === "ArrowUp" || key === "Enter" || key === "Escape";
 }
 
-function formatCountLabel(activeCount: number, missingCount: number, query: string): string {
-  if (query.trim()) {
-    return `${activeCount} active · ${missingCount} missing`;
-  }
-
+function formatCountLabel(activeCount: number, missingCount: number): string {
   return `${activeCount} active · ${missingCount} missing`;
 }

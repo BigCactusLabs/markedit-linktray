@@ -6,7 +6,7 @@ export type CandidateLink = {
   index: number;
 };
 
-const MARKDOWN_LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+const MARKDOWN_LINK_RE = /\[([^\]]+)\]\(([^()\s]*(?:\([^()\s]*\)[^()\s]*)*)\)/g;
 const WIKI_LINK_RE = /\[\[([^[\]]+)\]\]/g;
 
 export function extractLinkedMarkdownTargets(source: string): CandidateLink[] {
@@ -22,7 +22,7 @@ function extractMarkdownLinks(source: string): CandidateLink[] {
   return Array.from(source.matchAll(MARKDOWN_LINK_RE), (match) => {
     const original = match[0];
     const rawTarget = match[2];
-    const normalizedTarget = rawTarget.trim();
+    const normalizedTarget = stripFragment(rawTarget.trim());
     const index = match.index ?? 0;
 
     if (!isMarkdownTarget(normalizedTarget)) {
@@ -42,7 +42,7 @@ function extractMarkdownLinks(source: string): CandidateLink[] {
 function extractWikiLinks(source: string): CandidateLink[] {
   return Array.from(source.matchAll(WIKI_LINK_RE), (match) => {
     const original = match[0];
-    const rawTarget = match[1].split("|", 1)[0].trim();
+    const rawTarget = stripFragment(match[1].split("|", 1)[0].trim());
 
     if (!rawTarget) {
       return null;
@@ -58,10 +58,16 @@ function extractWikiLinks(source: string): CandidateLink[] {
   }).filter((link): link is CandidateLink => link !== null);
 }
 
+function stripFragment(target: string): string {
+  const hashIndex = target.indexOf("#");
+  return hashIndex < 0 ? target : target.slice(0, hashIndex);
+}
+
 function isMarkdownTarget(target: string): boolean {
-  return target.toLowerCase().endsWith(".md");
+  return stripFragment(target).toLowerCase().endsWith(".md");
 }
 
 function normalizeWikiTarget(target: string): string {
-  return isMarkdownTarget(target) ? target : `${target}.md`;
+  const stripped = stripFragment(target);
+  return isMarkdownTarget(stripped) ? stripped : `${stripped}.md`;
 }

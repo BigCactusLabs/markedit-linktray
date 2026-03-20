@@ -23,6 +23,14 @@ describe("resolveMarkdownTarget", () => {
     })).toBe("/workspace/docs/notes/nested/idea.md");
   });
 
+  it("strips anchor fragments before resolving", () => {
+    expect(resolveMarkdownTarget({
+      currentFilePath: "/workspace/docs/notes/today.md",
+      rawTarget: "../specs/plan.md#section",
+      kind: "markdown"
+    })).toBe("/workspace/docs/specs/plan.md");
+  });
+
   it("normalizes path separators before resolving", () => {
     expect(resolveMarkdownTarget({
       currentFilePath: "/workspace/docs/notes/today.md",

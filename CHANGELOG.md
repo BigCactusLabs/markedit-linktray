@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2 — 2026-03-20
+
+- Fix: links with anchor fragments (`file.md#heading`, `[[note#section]]`) are now recognized instead of silently dropped
+- Fix: parentheses in link targets (`release_(v2).md`) no longer break parsing
+- Fix: arrow keys no longer corrupt selection state when the filter matches nothing
+
 ## 0.1.1 — 2026-03-18
 
 - Hovering a row in the quick switcher now moves the selection highlight

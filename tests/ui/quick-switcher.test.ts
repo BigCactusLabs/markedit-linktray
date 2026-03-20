@@ -108,6 +108,20 @@ describe("createQuickSwitcher", () => {
     expect(onOpen).not.toHaveBeenCalled();
   });
 
+  it("keeps selectedIndex at zero when arrow keys are pressed with no matching items", () => {
+    const switcher = createQuickSwitcher(pickerItems, {
+      onOpen: vi.fn(),
+      onClose: vi.fn()
+    });
+
+    switcher.setQuery("zzz_no_match");
+    switcher.handleKey("ArrowDown");
+    expect(switcher.selectedIndex).toBe(0);
+
+    switcher.handleKey("ArrowUp");
+    expect(switcher.selectedIndex).toBe(0);
+  });
+
   it("closes the picker on escape", () => {
     const onClose = vi.fn();
     const switcher = createQuickSwitcher(pickerItems, {

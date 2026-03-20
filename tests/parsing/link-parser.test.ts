@@ -59,6 +59,39 @@ describe("extractLinkedMarkdownTargets", () => {
     ]);
   });
 
+  it("strips anchor fragments from markdown links", () => {
+    expect(stripIndices(extractLinkedMarkdownTargets("[Setup](INSTALL.md#prerequisites)"))).toEqual([
+      {
+        kind: "markdown",
+        original: "[Setup](INSTALL.md#prerequisites)",
+        rawTarget: "INSTALL.md#prerequisites",
+        normalizedTarget: "INSTALL.md"
+      }
+    ]);
+  });
+
+  it("strips anchor fragments from wiki links", () => {
+    expect(stripIndices(extractLinkedMarkdownTargets("[[note#heading]]"))).toEqual([
+      {
+        kind: "wiki",
+        original: "[[note#heading]]",
+        rawTarget: "note",
+        normalizedTarget: "note.md"
+      }
+    ]);
+  });
+
+  it("handles parentheses in markdown link targets", () => {
+    expect(stripIndices(extractLinkedMarkdownTargets("[doc](release_(v2).md)"))).toEqual([
+      {
+        kind: "markdown",
+        original: "[doc](release_(v2).md)",
+        rawTarget: "release_(v2).md",
+        normalizedTarget: "release_(v2).md"
+      }
+    ]);
+  });
+
   it("ignores malformed input safely", () => {
     expect(extractLinkedMarkdownTargets("Broken [link]( and stray [[wiki]")).toEqual([]);
   });

@@ -43,8 +43,13 @@ export function toDisplayPath({
   );
 }
 
+function stripFragment(target: string): string {
+  const hashIndex = target.indexOf("#");
+  return hashIndex < 0 ? target : target.slice(0, hashIndex);
+}
+
 function normalizeTarget(rawTarget: string, kind: ResolveMarkdownTargetInput["kind"]): string {
-  const normalizedTarget = normalizePath(rawTarget.trim());
+  const normalizedTarget = normalizePath(stripFragment(rawTarget.trim()));
 
   if (kind === "wiki" && !normalizedTarget.toLowerCase().endsWith(".md")) {
     return `${normalizedTarget}.md`;

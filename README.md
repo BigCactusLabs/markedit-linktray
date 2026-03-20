@@ -36,7 +36,7 @@ npm install && npm run build
 | `Enter` on **Missing (N)** | Expand or collapse missing links |
 | `Escape` | Close |
 
-LinkTray parses both `[label](path.md)` and `[[wiki]]` links. Paths are repo-relative when a `.git` root is discoverable, document-relative otherwise. Green dot means the file exists. Red dot means it doesn't — yet.
+LinkTray parses both `[label](path.md)` and `[[wiki]]` links, including targets with anchor fragments (`file.md#heading`) and parentheses in filenames. Paths are repo-relative when a `.git` root is discoverable, document-relative otherwise. Green dot means the file exists. Red dot means it doesn't — yet.
 
 > **Note:** MarkEdit sandboxes file access. If a linked note won't open, grant its parent folder access in MarkEdit preferences.
 
@@ -46,7 +46,7 @@ LinkTray parses both `[label](path.md)` and `[[wiki]]` links. Paths are repo-rel
 
 ```sh
 npm install       # dependencies
-npm test          # 30 tests, fast
+npm test          # 36 tests, fast
 npm run build     # -> dist/markedit-linktray.js
 ```
 
