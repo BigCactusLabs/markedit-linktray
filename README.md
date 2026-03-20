@@ -4,7 +4,7 @@
 
 A [MarkEdit](https://github.com/MarkEdit-app/MarkEdit) extension that reads the links in your current Markdown note and drops them into a keyboard-first quick switcher. One shortcut, every linked file, no hunting.
 
-<img src="docs/markedit-linktray-ex.png" alt="MarkEdit-linktray quick switcher" width="50%">
+<img src="docs/markedit-linktray-ex.png" alt="MarkEdit-linktray quick switcher" width="65%">
 
 ---
 
