@@ -4,7 +4,7 @@
 
 A [MarkEdit](https://github.com/MarkEdit-app/MarkEdit) extension that reads the links in your current Markdown note and drops them into a keyboard-first quick switcher. One shortcut, every linked file, no hunting.
 
-![MarkEdit-linktray quick switcher](docs/markedit-linktray-ex.png)
+<img src="docs/markedit-linktray-ex.png" alt="MarkEdit-linktray quick switcher" width="50%">
 
 ---
 
@@ -64,7 +64,7 @@ npm run build     # -> dist/markedit-linktray.js
 
 ## Contributing
 
-MarkEdit-linktray is small on purpose. If you have an idea, [open an issue](https://github.com/BigCactusLabs/markedit-linktray/issues) first. It's easier to align on direction before writing code.
+MarkEdit-linktray is small on purpose. If you have an idea, [open an issue](https://github.com/BigCactusLabs/MarkEdit-linktray/issues) first. It's easier to align on direction before writing code.
 
 Bug reports and PRs are welcome.
 
